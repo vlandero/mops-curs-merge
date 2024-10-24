@@ -1,5 +1,5 @@
-function calculateSum(a, b) {
-    return a + b;
+function calculateSum(numbers) {
+    return numbers.reduce((acc, curr) => acc + curr, 0);
 }
 
-console.log(calculateSum(5, 2));
+console.log(calculateSum([5, 2]));
