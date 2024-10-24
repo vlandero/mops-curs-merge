@@ -1,37 +1,15 @@
-import { IsString, IsInt, Min, validateSync } from 'class-validator';
+import { z } from 'zod'
 
-class User {
-    @IsString()
-    name;
-
-    @IsInt()
-    @Min(1)
-    age;
-
-    constructor(name, age) {
-        this.name = name;
-        this.age = age;
-    }
-}
-
-function validateUser(user) {
-    const userObj = new User(user.name, user.age);
-    const errors = validateSync(userObj);
-
-    if (errors.length > 0) {
-        throw new Error("Validation failed");
-    }
-    return userObj;
-}
+const UserSchema = z.object({
+    name: z.string().min(1, "Name must be a non-empty string"),
+    age: z.number().positive()
+}).transform(user => ({
+    fullName: user.name,
+    age: user.age
+}));
 
 function mapUsers(users) {
-    return users.map(user => {
-        validateUser(user);
-        return {
-            fullName: user.name,
-            age: user.age
-        };
-    });
+    return users.map(user => UserSchema.parse(user));
 }
 
 const users = [
