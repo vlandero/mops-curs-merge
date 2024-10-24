@@ -1,5 +1,7 @@
 import { IsString, IsInt, Min, validateSync } from 'class-validator';
 
+index = 0;
+
 class User {
     @IsString()
     name;
@@ -28,8 +30,9 @@ function mapUsers(users) {
     return users.map(user => {
         validateUser(user);
         return {
+            index: index++,
             fullName: user.name,
-            age: user.age
+            u18: user.age < 18
         };
     });
 }
