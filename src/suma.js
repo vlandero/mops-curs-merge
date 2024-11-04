@@ -1,6 +1,7 @@
-function calculateSum(a, b) {
+
+function calculateSum(numbers) {
     if (typeof a === 'number' && typeof b === 'number') throw Error("Invalid input");
-    return a + b;
+  return numbers.reduce((acc, curr) => acc + curr, 0);
 }
 
-console.log(calculateSum(5, 2));
+console.log(calculateSum([5, 2]));
